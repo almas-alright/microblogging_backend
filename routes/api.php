@@ -19,7 +19,6 @@ use App\Http\Controllers\API\AuthController;
 //    return $request->user();
 //});
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);

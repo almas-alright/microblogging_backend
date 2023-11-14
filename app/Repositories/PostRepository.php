@@ -18,7 +18,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
      */
     public function getAll()
     {
-        // TODO: Implement getAll() method.
+        return $this->model->all();
     }
 
     /**
@@ -26,7 +26,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
+        return $this->model->find($id);
     }
 
     /**
@@ -34,7 +34,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
      */
     public function create(array $attributes)
     {
-        // TODO: Implement create() method.
+        return $this->model->create($attributes);
     }
 
     /**
@@ -42,7 +42,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
      */
     public function update($id, array $attributes)
     {
-        // TODO: Implement update() method.
+        $result = $this->model->find($id);
+        if($result) {
+            $result->update($attributes);
+            return $result;
+        }
+        return false;
     }
 
     /**
@@ -50,6 +55,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        $result = $this->model->find($id);
+        if($result) {
+            $result->delete();
+            return true;
+        }
+        return false;
     }
 }

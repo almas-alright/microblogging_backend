@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\TestAssignment\Services;
+namespace App\Services;
 
 
 class ApiResponseService

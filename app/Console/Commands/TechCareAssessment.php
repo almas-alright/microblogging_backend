@@ -27,11 +27,12 @@ class TechCareAssessment extends Command
     public function handle()
     {
         $this->info('Installing...TechCare Assignemnt..');
-//        Artisan::call('jwt:secret');
-//        Artisan::call('migrate');
-//        Artisan::call('migrate', ['--path' => 'database/migrations/assignment_db']);
-//        Artisan::call('migrate', ['--path' => 'database/migrations/api']);
-//        Artisan::call('db:seed');
+        Artisan::call('jwt:secret');
+        Artisan::call('migrate');
+        Artisan::call('db:seed', ['--class' => 'UserTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'FollowTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'PostTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'ReactionTableSeeder']);
         $this->newLine();
         $this->info('demo user : ');
         $this->table(['email', 'password'], [['kutsnalmas@gmail.com', 'abcd1234']]);

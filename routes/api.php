@@ -28,4 +28,5 @@ Route::group([
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
 
-Route::apiResource('post', \App\Http\Controllers\Api\PostController::class);
+Route::apiResource('post', \App\Http\Controllers\Api\PostController::class)->middleware('jwt');
+Route::post('follow/{user:username}', \App\Http\Controllers\Api\FollowController::class)->middleware('jwt');

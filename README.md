@@ -5,4 +5,4 @@
 - then `php artisan tech-care-assessment:init`
 - you will get a test user and password
 - then install vue app and use test user email and password to login
-- vue app is here : https://github.com/almas-alright/tmss_test_vue](https://github.com/almas-alright/[]([https://github.com/almas-alright/](****https://github.com/almas-alright/****)))
+- vue app is here : https://github.com/almas-alright/microblogging_vue](https://github.com/almas-alright/microblogging_vue[]([https://github.com/almas-alright/microblogging_vue](****https://github.com/almas-alright/microblogging_vue****)))

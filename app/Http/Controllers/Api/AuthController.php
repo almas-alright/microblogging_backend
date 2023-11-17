@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -19,23 +20,40 @@ class AuthController extends Controller
 //        $this->middleware('auth:api', ['except' => ['login', 'register', 'userProfile']]);
         $this->middleware('jwt', ['only' => ['userProfile', 'refresh']]);
     }
+
     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
      */
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
-        ]);
+        ],['active.exists' => 'user not active']);
+
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => $validator->errors()
+                ],
+                422
+            );
         }
-        if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $nm = Validator::make([], []); // Empty data and rules fields
+        $nm->errors()->add('abc', 'Invalid email or password');
+        $invalid = new ValidationException($nm);
+
+        if (!$token = auth('api')->attempt($validator->validated())) {
+            return response()->json([
+                'success' => false,
+                'errors' => $invalid->errors()
+            ], 422);
+        } else {
+            return $this->createNewToken($token);
         }
-        return $this->createNewToken($token);
     }
     /**
      * Register a User.
@@ -85,7 +103,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
-        return response()->json(auth()->user());
+        return response()->json(['user' => auth()->user()]);
     }
     /**
      * Get the token array structure.

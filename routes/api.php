@@ -23,7 +23,7 @@ Route::group([
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
 });
 
@@ -34,6 +34,7 @@ Route::post('reactions/{post}/react', \App\Http\Controllers\Api\ReactionControll
 Route::group(['prefix' => 'user'],function (){
     Route::get('/profile', [AuthController::class, 'userProfile']);
     Route::get('/search', \App\Http\Controllers\Api\UserSearchController::class)->middleware('jwt');
+    Route::get('/posts/{user:username}', \App\Http\Controllers\Api\UserPostsController::class)->middleware('jwt');
 });
 
 Route::post('/follow/{user:username}', \App\Http\Controllers\Api\FollowController::class)->middleware('jwt');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -60,13 +61,13 @@ class Post extends Model
             ->count();
     }
 
-    public function scopeWithLikes(Builder $query)
+    public function scopeWithReactions(Builder $query)
     {
-        $query->leftJoinSub(
-            'select post_id, sum(liked) likes, sum(!liked) dislikes from reactions group by post_id',
+        $query->leftJoinSub('select post_id, sum(liked) likes, sum(!liked) dislikes from reactions group by post_id',
             'likes',
-            'reactions.post_id',
+            'likes.post_id',
             'posts.id'
         );
+
     }
 }

@@ -6,4 +6,4 @@
 - you will get a test user and password
 - now you are ready to run `php artisan serve`
 - then install vue app and use test user email and password to login
-- vue app is here : https://github.com/almas-alright/microblogging_vue](https://github.com/almas-alright/microblogging_vue[]([https://github.com/almas-alright/microblogging_vue](****https://github.com/almas-alright/microblogging_vue****)))
+- vue app is here : [https://github.com/almas-alright/microblogging_vue](https://github.com/almas-alright/microblogging_vue)

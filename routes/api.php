@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
@@ -25,6 +24,7 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user', [AuthController::class, 'user']);
 });
 
 Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class)->middleware('jwt');
@@ -32,7 +32,7 @@ Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class)->mi
 Route::post('reactions/{post}/react', \App\Http\Controllers\Api\ReactionController::class);
 
 Route::group(['prefix' => 'user'],function (){
-    Route::get('/profile', [AuthController::class, 'userProfile']);
+    Route::get('/profile/{user:username}', App\Http\Controllers\Api\UserProfileController::class);
     Route::get('/search', \App\Http\Controllers\Api\UserSearchController::class)->middleware('jwt');
     Route::get('/posts/{user:username}', \App\Http\Controllers\Api\UserPostsController::class)->middleware('jwt');
 });

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -74,10 +75,19 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User successfully registered',
+                'user' => 'fd'//$user
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Opps Something Happened Wrong',
+                'user' => 'fd'//$user
+            ], 201);
+        }
     }
 
     /**
@@ -102,8 +112,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
-        return response()->json(['user' => auth()->user()]);
+    public function user() {
+        $user = User::find(auth()->user()->id);
+        $data = new UserResource($user);
+        return response()->json(['user' => $data]);
     }
     /**
      * Get the token array structure.

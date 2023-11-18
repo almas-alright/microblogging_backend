@@ -32,7 +32,7 @@ Route::apiResource('posts', \App\Http\Controllers\Api\PostController::class)->mi
 Route::post('reactions/{post}/react', \App\Http\Controllers\Api\ReactionController::class);
 
 Route::group(['prefix' => 'user'],function (){
-    Route::get('/profile/{user:username}', App\Http\Controllers\Api\UserProfileController::class);
+    Route::get('/profile/{user:username}', App\Http\Controllers\Api\UserProfileController::class)->middleware('jwt');
     Route::get('/search', \App\Http\Controllers\Api\UserSearchController::class)->middleware('jwt');
     Route::get('/posts/{user:username}', \App\Http\Controllers\Api\UserPostsController::class)->middleware('jwt');
 });
